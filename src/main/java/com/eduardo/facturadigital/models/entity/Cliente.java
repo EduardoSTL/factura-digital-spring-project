@@ -12,7 +12,8 @@ import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "clientes")
 public class Cliente {
     @Id
@@ -37,7 +38,7 @@ public class Cliente {
     private String foto;
 
     public void addFactura(Factura factura){
-        factura.add(factura);
+        facturas.add(factura);
     }
 
     public static long getSerialversionuid(){
