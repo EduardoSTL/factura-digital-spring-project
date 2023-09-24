@@ -9,5 +9,4 @@ public class FacturaDigitalApplication {
     public static void main(String[] args) {
         SpringApplication.run(FacturaDigitalApplication.class, args);
     }
-
 }
