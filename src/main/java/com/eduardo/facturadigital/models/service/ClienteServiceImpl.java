@@ -17,17 +17,20 @@ public class ClienteServiceImpl implements IClienteService{
     private IClienteDao clienteDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Cliente> findAll() {
         // TODO Auto-generated method stub
         return (List<Cliente>) clienteDao.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Cliente> findAll(Pageable pageable) {
-        return null;
+        return clienteDao.findAll(pageable);
     }
 
     @Override
+    @Transactional
     public void save(Cliente cliente) {
         clienteDao.save(cliente);
     }
@@ -35,12 +38,13 @@ public class ClienteServiceImpl implements IClienteService{
     @Override
     @Transactional(readOnly = true)
     public Cliente findOne(Long id) {
-        return null;
+        // TODO Auto-generated method stub
+        return clienteDao.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-
+        clienteDao.deleteById(id);
     }
 }
