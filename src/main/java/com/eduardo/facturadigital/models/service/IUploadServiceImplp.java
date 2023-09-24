@@ -1,5 +1,6 @@
 package com.eduardo.facturadigital.models.service;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -13,13 +14,12 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 
 @Service
 public class IUploadServiceImplp implements IUploadService{
 
-    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final static String UPLOADS_FOLDER = "uploads";
 
     @Override
