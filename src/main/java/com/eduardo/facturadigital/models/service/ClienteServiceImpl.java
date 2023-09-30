@@ -57,7 +57,7 @@ public class ClienteServiceImpl implements IClienteService{
 
     @Override
     public void saveFactura(Factura factura) {
-        clienteDao.save();
+        saveFactura(factura);
     }
 
     @Override
@@ -72,6 +72,6 @@ public class ClienteServiceImpl implements IClienteService{
 
     @Override
     public void deleteFactura(Long id) {
-        clienteDao.deleteById(id);
+        deleteFactura(id);
     }
 }

@@ -19,4 +19,8 @@ public class ItemFactura implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id")
     private Producto producto;
+
+    public Double calcularImporte() {
+        return cantidad.doubleValue() * producto.getPrecio();
+    }
 }
