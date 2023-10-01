@@ -29,10 +29,8 @@ import java.util.Map;
 public class ClienteController {
     @Autowired
     private IClienteService clienteService;
-
     @Autowired
     private IUploadFileService uploadFileService;
-
     @GetMapping(value = "/uploads/{filename:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
         Resource recurso = null;
@@ -43,10 +41,10 @@ public class ClienteController {
             e.printStackTrace();
         }
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""
+                        + recurso.getFilename() + "\"")
                 .body(recurso);
     }
-
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model,
                       RedirectAttributes flash) {
@@ -61,14 +59,13 @@ public class ClienteController {
         model.put("titulo", "Detalle cliente: " + cliente.getNombre());
         return "ver";
     }
-
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
-    public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+    public String listar(@RequestParam(name = "page", defaultValue = "0")
+                         int page, Model model) {
 
         Pageable pageRequest = PageRequest.of(page, 4);
 
         Page<Cliente> clientes = clienteService.findAll(pageRequest);
-
         PageRender<Cliente> pageRender = new PageRender<Cliente>("/listar", clientes);
         model.addAttribute("titulo", "Listado de clientes");
         model.addAttribute("clientes", clientes);
@@ -86,10 +83,9 @@ public class ClienteController {
     }
 
     @RequestMapping(value = "/form/{id}")
-    public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
-
+    public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model,
+                         RedirectAttributes flash) {
         Cliente cliente = null;
-
         if (id > 0) {
             cliente = clienteService.findOne(id);
             if (cliente == null) {
@@ -107,21 +103,18 @@ public class ClienteController {
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String guardar(@Valid Cliente cliente, BindingResult result, Model model,
-                          @RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+                          @RequestParam("file") MultipartFile foto, RedirectAttributes flash,
+                          SessionStatus status) {
 
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Formulario de Cliente");
             return "form";
         }
-
         if (!foto.isEmpty()) {
-
             if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto() != null
                     && cliente.getFoto().length() > 0) {
-
                 uploadFileService.delete(cliente.getFoto());
             }
-
             String uniqueFilename = null;
             try {
                 uniqueFilename = uploadFileService.copy(foto);
@@ -129,20 +122,19 @@ public class ClienteController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
-            flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFilename + "'");
+            flash.addFlashAttribute("info", "Has subido correctamente '"
+                    + uniqueFilename + "'");
 
             cliente.setFoto(uniqueFilename);
         }
 
-        String mensajeFlash = (cliente.getId() != null) ? "Cliente editado con éxito!" : "Cliente creado con éxito!";
-
+        String mensajeFlash = (cliente.getId() != null) ? "Cliente editado con éxito!" :
+                "Cliente creado con éxito!";
         clienteService.save(cliente);
         status.setComplete();
         flash.addFlashAttribute("success", mensajeFlash);
         return "redirect:listar";
     }
-
     @RequestMapping(value = "/eliminar/{id}")
     public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 

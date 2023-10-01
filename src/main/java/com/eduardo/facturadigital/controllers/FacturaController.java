@@ -121,5 +121,4 @@ public class FacturaController {
 
         return "redirect:/listar";
     }
-
 }
