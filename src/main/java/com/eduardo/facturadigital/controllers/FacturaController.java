@@ -27,7 +27,7 @@ public class FacturaController {
     @Autowired
     private IClienteService clienteService;
     private final Logger log = LoggerFactory.getLogger(getClass());
-    @GetMapping("/ver/{id]")
+    @GetMapping("/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash){
         Factura factura = clienteService.findFacturaById(id);
 
@@ -67,8 +67,7 @@ public class FacturaController {
     public String guardar(@Valid Factura factura, BindingResult result, Model model,
                           @RequestParam(name = "item_id[]", required = false)Long[] itemId,
                           @RequestParam(name = "cantidad[]", required = false)Integer[] cantidad,
-                          RedirectAttributes flash,
-                          SessionStatus status){
+                          RedirectAttributes flash, SessionStatus status){
         if (result.hasErrors()){
             model.addAttribute("titulo", "Crear Factura");
             return "factura/form";
