@@ -46,5 +46,10 @@ public class Cliente {
         return serialVersionUID;
     }
 
+    @Override
+    public String toString() {
+        return nombre + " " + apellido;
+    }
+
     private static final long serialVersionUID = 1L;
 }
