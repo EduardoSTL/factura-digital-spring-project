@@ -1,6 +1,8 @@
 package com.eduardo.facturadigital.models.service;
 
 import com.eduardo.facturadigital.models.dao.IClienteDao;
+import com.eduardo.facturadigital.models.dao.IFacturaDao;
+import com.eduardo.facturadigital.models.dao.IProductoDao;
 import com.eduardo.facturadigital.models.entity.Cliente;
 import com.eduardo.facturadigital.models.entity.Factura;
 import com.eduardo.facturadigital.models.entity.Producto;
@@ -17,6 +19,12 @@ public class ClienteServiceImpl implements IClienteService{
 
     @Autowired
     private IClienteDao clienteDao;
+
+    @Autowired
+    private IFacturaDao facturaDao;
+
+    @Autowired
+    private IProductoDao productoDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -51,27 +59,34 @@ public class ClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public List<Producto> findByNombre(String nombre) {
-        return findByNombre(nombre);
+    @Transactional(readOnly = true)
+    public List<Producto> findByNombre(String term) {
+        return productoDao.findByNombreLikeIgnoreCase("%" + term + "%");
     }
 
     @Override
+    @Transactional
     public void saveFactura(Factura factura) {
-        saveFactura(factura);
+        facturaDao.save(factura);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Producto findProductoById(Long id) {
-        return findProductoById(id);
+        // TODO Auto-generated method stub
+        return productoDao.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Factura findFacturaById(Long id) {
-        return findFacturaById(id);
+        // TODO Auto-generated method stub
+        return facturaDao.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional
     public void deleteFactura(Long id) {
-        deleteFactura(id);
+        facturaDao.deleteById(id);
     }
 }
