@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 //interface que se encarga de subir archivos y validar con exceptions propias
-public interface IUploadService {
+public interface IUploadFileService {
     Resource load(String filename) throws MalformedURLException;
     String copy(MultipartFile file) throws IOException;
     boolean delete(String filename);

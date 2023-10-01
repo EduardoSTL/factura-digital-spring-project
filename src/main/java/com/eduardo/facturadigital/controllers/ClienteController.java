@@ -2,7 +2,7 @@ package com.eduardo.facturadigital.controllers;
 
 import com.eduardo.facturadigital.models.entity.Cliente;
 import com.eduardo.facturadigital.models.service.IClienteService;
-import com.eduardo.facturadigital.models.service.IUploadService;
+import com.eduardo.facturadigital.models.service.IUploadFileService;
 import com.eduardo.facturadigital.util.paginator.PageRender;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class ClienteController {
     private IClienteService clienteService;
 
     @Autowired
-    private IUploadService uploadFileService;
+    private IUploadFileService uploadFileService;
 
     @GetMapping(value = "/uploads/{filename:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
@@ -43,8 +43,7 @@ public class ClienteController {
             e.printStackTrace();
         }
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; " +
-                        "filename=\"" + recurso.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
                 .body(recurso);
     }
 

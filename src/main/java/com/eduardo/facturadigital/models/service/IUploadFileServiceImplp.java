@@ -17,7 +17,7 @@ import java.util.UUID;
 
 
 @Service
-public class IUploadServiceImplp implements IUploadService{
+public class IUploadFileServiceImplp implements IUploadFileService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final static String UPLOADS_FOLDER = "uploads";
